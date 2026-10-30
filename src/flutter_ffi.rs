@@ -69,6 +69,11 @@ fn initialize(app_dir: &str, custom_client_config: &str) {
     } else {
         crate::read_custom_client(custom_client_config);
     }
+    // linuxkafe: set incoming-only mode (viewer only)
+    {
+        use hbb_common::config::HARD_SETTINGS;
+        HARD_SETTINGS.write().unwrap().insert("conn-type".to_owned(), "incoming".to_owned());
+    }
     #[cfg(target_os = "android")]
     {
         // flexi_logger can't work when android_logger initialized.
