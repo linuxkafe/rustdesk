@@ -97,6 +97,9 @@ jobs:
     needs: generate-bridge
     runs-on: windows-2022
     timeout-minutes: 120
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Export GitHub Actions cache environment variables
         uses: actions/github-script@v6
@@ -141,17 +144,15 @@ jobs:
           vcpkgArguments: 'libvpx libyuv opus aom'
 
       - name: Prepare build log
-        shell: bash
         run: |
-          cd ${{ github.workspace }}
-          type nul > build.log
+          cd "${{ github.workspace }}"
+          touch build.log
 
       - name: Build rustdesk
-        shell: bash
         run: |
-          cd ${{ github.workspace }}
+          cd "${{ github.workspace }}"
           python build.py --flutter 2>&1 | tee -a build.log
-          echo "===== BUILD EXIT CODE: %ERRORLEVEL% =====" >> build.log
+          echo "===== BUILD EXIT CODE: $? =====" >> build.log
 
       - name: Upload build log
         if: always()
