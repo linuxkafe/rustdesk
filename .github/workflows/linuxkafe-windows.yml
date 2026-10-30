@@ -1,0 +1,95 @@
+name: linuxkafe-windows
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths:
+      - 'src/**'
+      - 'flutter/**'
+      - 'libs/hbb_common/**'
+      - 'build.py'
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+
+env:
+  RUST_VERSION: "1.75"
+  FLUTTER_VERSION: "3.22.2"
+  FLUTTER_RUST_BRIDGE_VERSION: "1.80.1"
+  VCPKG_COMMIT_ID: "9e593bb18ea69cc5095e012465dcd675a822ed0d"
+  VERSION: "1.5.1"
+
+jobs:
+  build-for-windows:
+    name: windows-x64
+    runs-on: windows-latest
+    timeout-minutes: 120
+    steps:
+      - name: Export GitHub Actions cache environment variables
+        uses: actions/github-script@v6
+        with:
+          script: |
+            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
+            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@v1
+        with:
+          toolchain: ${{ env.RUST_VERSION }}
+          targets: x86_64-pc-windows-msvc
+          components: rustfmt
+
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
+        with:
+          prefix-key: windows
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+
+      - name: Install flutter_rust_bridge_codegen
+        shell: bash
+        run: |
+          cargo install flutter_rust_bridge_codegen --version ${{ env.FLUTTER_RUST_BRIDGE_VERSION }} --features "uuid" --locked
+
+      - name: Setup vcpkg
+        uses: lukka/run-vcpkg@v11
+        with:
+          vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
+          vcpkgArguments: 'libvpx libyuv opus aom'
+
+      - name: Generate Flutter-Rust bridge
+        shell: bash
+        run: |
+          cd ${{ github.workspace }}
+          flutter_rust_bridge_codegen --rust-input ./src/flutter_ffi.rs --dart-output ./flutter/lib/generated_bridge.dart --c-output ./flutter/windows/bridge_generated.h
+
+      - name: Get Flutter dependencies
+        shell: bash
+        run: |
+          cd ${{ github.workspace }}/flutter
+          flutter pub get
+
+      - name: Build rustdesk
+        shell: bash
+        run: |
+          cd ${{ github.workspace }}
+          python build.py --flutter
+
+      - name: Upload Windows artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rustdesk-linuxkafe-windows
+          path: |
+            build/windows/x64/runner/Release/rustdesk.exe
+            build/windows/x64/runner/Release/data/flutter_assets/assets/linuxkafe.svg
+          retention-days: 30
+

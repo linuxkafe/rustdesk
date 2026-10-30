@@ -3754,9 +3754,9 @@ Widget loadPowered(BuildContext context) {
   ).marginOnly(top: 6);
 }
 
-const _kDefaultLogoAsset = 'assets/logo.png';
-const _kLightLogoAsset = 'assets/logo_light.png';
-const _kDarkLogoAsset = 'assets/logo_dark.png';
+const _kDefaultLogoAsset = 'assets/linuxkafe.svg';
+const _kLightLogoAsset = 'assets/linuxkafe.svg';
+const _kDarkLogoAsset = 'assets/linuxkafe.svg';
 
 List<String> _logoAssetCandidatesForBrightness(Brightness brightness) {
   return brightness == Brightness.dark
@@ -3793,20 +3793,21 @@ class _LogoState extends State<_Logo> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<String?>(
-      future: _logoFutureFor(Theme.of(context).brightness),
       builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
         final asset = snapshot.data;
         if (asset != null) {
-          final image = Image.asset(
-            asset,
-            fit: BoxFit.contain,
-            errorBuilder: (ctx, error, stackTrace) {
-              return Container();
-            },
-          );
+          final isSvg = asset.endsWith('.svg');
+          final Widget image = isSvg
+              ? SvgPicture.asset(
+                  asset,
+                  fit: BoxFit.contain,
+                  placeholderBuilder: (ctx) => const SizedBox.shrink(),
+                )
+              : Image.asset(
+                  asset,
+                  fit: BoxFit.contain,
+                  errorBuilder: (ctx, error, stackTrace) => Container(),
+                );
           return Container(
             constraints: BoxConstraints(maxWidth: 300, maxHeight: 60),
             child: image,
@@ -3814,20 +3815,6 @@ class _LogoState extends State<_Logo> {
         }
         return const Offstage();
       },
-    );
-  }
-}
-
-// max 300 x 60
-Widget loadLogo() => const _Logo();
-
-Widget loadIcon(double size) {
-  return Image.asset('assets/icon.png',
-      width: size,
-      height: size,
-      errorBuilder: (ctx, error, stackTrace) => SvgPicture.asset(
-            'assets/icon.svg',
-            width: size,
             height: size,
           ));
 }
