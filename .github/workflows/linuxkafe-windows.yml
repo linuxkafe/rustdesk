@@ -140,12 +140,18 @@ jobs:
           vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
           vcpkgArguments: 'libvpx libyuv opus aom'
 
+      - name: Prepare build log
+        shell: bash
+        run: |
+          cd ${{ github.workspace }}
+          type nul > build.log
+
       - name: Build rustdesk
         shell: bash
         run: |
           cd ${{ github.workspace }}
-          set -x
-          python build.py --flutter 2>&1 | tee build.log
+          python build.py --flutter 2>&1 | tee -a build.log
+          echo "===== BUILD EXIT CODE: %ERRORLEVEL% =====" >> build.log
 
       - name: Upload build log
         if: always()
