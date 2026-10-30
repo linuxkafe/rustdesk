@@ -43,9 +43,6 @@ lazy_static::lazy_static! {
 fn initialize(app_dir: &str, custom_client_config: &str) {
     flutter::async_tasks::start_flutter_async_runner();
     // `APP_DIR` is set in `main_get_data_dir_ios()` on iOS.
-fn initialize(app_dir: &str, custom_client_config: &str) {
-    flutter::async_tasks::start_flutter_async_runner();
-    // `APP_DIR` is set in `main_get_data_dir_ios()` on iOS.
     #[cfg(not(target_os = "ios"))]
     {
         *config::APP_DIR.write().unwrap() = app_dir.to_owned();
@@ -55,24 +52,6 @@ fn initialize(app_dir: &str, custom_client_config: &str) {
         crate::load_custom_client();
     } else {
         crate::read_custom_client(custom_client_config);
-    }
-    // linuxkafe: set incoming-only mode (viewer only)
-    {
-        use hbb_common::config::HARD_SETTINGS;
-        HARD_SETTINGS.write().unwrap().insert("conn-type".to_owned(), "incoming".to_owned());
-    }
-    #[cfg(target_os = "android")]
-    {
-    // core_main's load_custom_client does not work for flutter since it is only applied to its load_library in main.c
-    if custom_client_config.is_empty() {
-        crate::load_custom_client();
-    } else {
-        crate::read_custom_client(custom_client_config);
-    }
-    // linuxkafe: set incoming-only mode (viewer only)
-    {
-        use hbb_common::config::HARD_SETTINGS;
-        HARD_SETTINGS.write().unwrap().insert("conn-type".to_owned(), "incoming".to_owned());
     }
     #[cfg(target_os = "android")]
     {
