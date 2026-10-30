@@ -66,17 +66,17 @@ jobs:
           vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
           vcpkgArguments: 'libvpx libyuv opus aom'
 
-      - name: Generate Flutter-Rust bridge
-        shell: bash
-        run: |
-          cd ${{ github.workspace }}
-          flutter_rust_bridge_codegen --rust-input ./src/flutter_ffi.rs --dart-output ./flutter/lib/generated_bridge.dart --c-output ./flutter/windows/bridge_generated.h
-
       - name: Get Flutter dependencies
         shell: bash
         run: |
           cd ${{ github.workspace }}/flutter
           flutter pub get
+
+      - name: Generate Flutter-Rust bridge
+        shell: bash
+        run: |
+          cd ${{ github.workspace }}
+          ~/.cargo/bin/flutter_rust_bridge_codegen --rust-input ./src/flutter_ffi.rs --dart-output ./flutter/lib/generated_bridge.dart --c-output ./flutter/windows/bridge_generated.h
 
       - name: Build rustdesk
         shell: bash
