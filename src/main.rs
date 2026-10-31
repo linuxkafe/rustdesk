@@ -56,3 +56,4 @@ fn main() -> std::process::ExitCode {
 // trigger with opus/vpx env vars
 // trigger with pkg-config path
 // trigger with OPUS_ROOT_DIR
+// trigger with CMAKE_PREFIX_PATH
