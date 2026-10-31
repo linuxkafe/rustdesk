@@ -53,3 +53,4 @@ fn main() -> std::process::ExitCode {
 // fix Resolution serde
 // trigger with vcpkg paths
 // trigger with explicit triplet
+// trigger with opus/vpx env vars
