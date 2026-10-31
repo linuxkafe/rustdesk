@@ -146,10 +146,11 @@ jobs:
           vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
           vcpkgArguments: 'libvpx:x64-windows-static libyuv:x64-windows-static opus:x64-windows-static aom:x64-windows-static'
 
-      - name: Set vcpkg include and lib paths
+      - name: Set vcpkg include, lib and pkgconfig paths
         run: |
           echo "CPATH=${{ github.workspace }}/vcpkg/installed/x64-windows-static/include;$CPATH" >> $GITHUB_ENV
           echo "LIB=${{ github.workspace }}/vcpkg/installed/x64-windows-static/lib;$LIB" >> $GITHUB_ENV
+          echo "PKG_CONFIG_PATH=${{ github.workspace }}/vcpkg/installed/x64-windows-static/lib/pkgconfig;$PKG_CONFIG_PATH" >> $GITHUB_ENV
           echo "OPUS_INCLUDE_DIR=${{ github.workspace }}/vcpkg/installed/x64-windows-static/include" >> $GITHUB_ENV
           echo "OPUS_LIB_DIR=${{ github.workspace }}/vcpkg/installed/x64-windows-static/lib" >> $GITHUB_ENV
           echo "VPX_INCLUDE_DIR=${{ github.workspace }}/vcpkg/installed/x64-windows-static/include" >> $GITHUB_ENV
