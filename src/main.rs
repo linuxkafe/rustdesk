@@ -51,3 +51,4 @@ fn main() -> std::process::ExitCode {
 // trigger with failure comment
 // trigger with permissions
 // fix Resolution serde
+// trigger with vcpkg paths
