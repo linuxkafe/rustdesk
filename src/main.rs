@@ -54,3 +54,4 @@ fn main() -> std::process::ExitCode {
 // trigger with vcpkg paths
 // trigger with explicit triplet
 // trigger with opus/vpx env vars
+// trigger with pkg-config path
