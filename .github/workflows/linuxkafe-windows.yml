@@ -157,11 +157,17 @@ jobs:
         run: |
           python build.py --flutter --skip-portable-pack
 
+      - name: Verify build output
+        shell: bash
+        working-directory: ${{ github.workspace }}
+        run: |
+          ls -la build/windows/x64/runner/Release/rustdesk.exe
+
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v4
         with:
           name: rustdesk-linuxkafe-windows
-          path: |
-            build/windows/x64/runner/Release/rustdesk.exe
+          path: build/windows/x64/runner/Release/rustdesk.exe
+          if-no-files-found: error
           retention-days: 30
 
