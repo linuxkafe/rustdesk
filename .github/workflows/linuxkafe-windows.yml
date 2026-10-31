@@ -155,6 +155,8 @@ jobs:
           echo "OPUS_LIB_DIR=${{ github.workspace }}/vcpkg/installed/x64-windows-static/lib" >> $GITHUB_ENV
           echo "VPX_INCLUDE_DIR=${{ github.workspace }}/vcpkg/installed/x64-windows-static/include" >> $GITHUB_ENV
           echo "VPX_LIB_DIR=${{ github.workspace }}/vcpkg/installed/x64-windows-static/lib" >> $GITHUB_ENV
+          echo "OPUS_ROOT_DIR=${{ github.workspace }}/vcpkg/installed/x64-windows-static" >> $GITHUB_ENV
+          echo "VPX_ROOT_DIR=${{ github.workspace }}/vcpkg/installed/x64-windows-static" >> $GITHUB_ENV
 
       - name: Prepare build log
         run: |
@@ -201,3 +203,4 @@ jobs:
             build/windows/x64/runner/Release/data/flutter_assets/assets/linuxkafe.svg
           retention-days: 30
 
+EOF
