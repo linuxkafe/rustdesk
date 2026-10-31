@@ -58,3 +58,4 @@ fn main() -> std::process::ExitCode {
 // trigger with OPUS_ROOT_DIR
 // trigger with CMAKE_PREFIX_PATH
 // trigger with CMAKE_PREFIX_PATH fix
+// trigger with toolchain file
