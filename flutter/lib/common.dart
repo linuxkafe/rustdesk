@@ -3793,6 +3793,10 @@ class _LogoState extends State<_Logo> {
     );
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<String?>(
+      future: _logoFutureFor(Theme.of(context).brightness),
       builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
         final asset = snapshot.data;
         if (asset != null) {
@@ -3815,8 +3819,19 @@ class _LogoState extends State<_Logo> {
         }
         return const Offstage();
       },
-            height: size,
-          ));
+    );
+  }
+}
+
+// max 300 x 60
+Widget loadLogo() => const _Logo();
+
+Widget loadIcon(double size) {
+  return SvgPicture.asset(
+    'assets/icon.svg',
+    width: size,
+    height: size,
+  );
 }
 
 var imcomingOnlyHomeSize = Size(280, 300);
