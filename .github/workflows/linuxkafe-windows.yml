@@ -138,12 +138,11 @@ jobs:
         uses: lukka/run-vcpkg@v11
         with:
           vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
-          vcpkgArguments: 'libvpx libyuv opus aom'
 
       - name: Build rustdesk
         shell: bash
+        working-directory: ${{ github.workspace }}
         run: |
-          cd ${{ github.workspace }}
           python build.py --flutter
 
       - name: Upload Windows artifact
