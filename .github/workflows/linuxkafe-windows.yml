@@ -139,6 +139,12 @@ jobs:
         with:
           vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
 
+      - name: Install vcpkg dependencies
+        shell: bash
+        working-directory: ${{ github.workspace }}
+        run: |
+          vcpkg install --triplet x64-windows-static --x-install-root="$VCPKG_ROOT/installed"
+
       - name: Build rustdesk
         shell: bash
         working-directory: ${{ github.workspace }}
