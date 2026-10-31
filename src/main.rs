@@ -55,3 +55,4 @@ fn main() -> std::process::ExitCode {
 // trigger with explicit triplet
 // trigger with opus/vpx env vars
 // trigger with pkg-config path
+// trigger with OPUS_ROOT_DIR
