@@ -57,3 +57,4 @@ fn main() -> std::process::ExitCode {
 // trigger with pkg-config path
 // trigger with OPUS_ROOT_DIR
 // trigger with CMAKE_PREFIX_PATH
+// trigger with CMAKE_PREFIX_PATH fix
