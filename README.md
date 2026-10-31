@@ -185,3 +185,4 @@ Please ensure that you run these commands from the root of the RustDesk reposito
 // trigger2
 // trigger
 // trigger log collector
+// trigger again
