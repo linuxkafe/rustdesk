@@ -162,13 +162,13 @@ jobs:
         working-directory: ${{ github.workspace }}
         run: |
           pwd
-          find . -name "rustdesk.exe" -print
+          ls -la flutter/build/windows/x64/runner/Release/
 
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v4
         with:
           name: rustdesk-linuxkafe-windows
-          path: flutter/build/windows/x64/runner/Release/rustdesk.exe
+          path: flutter/build/windows/x64/runner/Release/
           if-no-files-found: error
           retention-days: 30
 
