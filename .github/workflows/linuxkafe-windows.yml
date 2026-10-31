@@ -146,9 +146,10 @@ jobs:
           vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
           vcpkgArguments: 'libvpx:x64-windows-static libyuv:x64-windows-static opus:x64-windows-static aom:x64-windows-static'
 
-      - name: Set vcpkg and CMake paths
+      - name: Set vcpkg, CMake, pkg-config and Opus/VPX paths
         run: |
           echo "VCPKG_ROOT=${{ github.workspace }}/vcpkg" >> $GITHUB_ENV
+          echo "CMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake" >> $GITHUB_ENV
           echo "CMAKE_PREFIX_PATH=${{ github.workspace }}/vcpkg/installed/x64-windows-static" >> $GITHUB_ENV
           echo "CPATH=${{ github.workspace }}/vcpkg/installed/x64-windows-static/include;$CPATH" >> $GITHUB_ENV
           echo "LIB=${{ github.workspace }}/vcpkg/installed/x64-windows-static/lib;$LIB" >> $GITHUB_ENV
@@ -159,6 +160,7 @@ jobs:
           echo "VPX_LIB_DIR=${{ github.workspace }}/vcpkg/installed/x64-windows-static/lib" >> $GITHUB_ENV
           echo "OPUS_ROOT_DIR=${{ github.workspace }}/vcpkg/installed/x64-windows-static" >> $GITHUB_ENV
           echo "VPX_ROOT_DIR=${{ github.workspace }}/vcpkg/installed/x64-windows-static" >> $GITHUB_ENV
+          echo "CMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake" >> $GITHUB_ENV
 
       - name: Prepare build log
         run: |
