@@ -162,6 +162,22 @@ jobs:
           path: build.log
           retention-days: 30
 
+      - name: Post build log as commit comment on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const log = fs.readFileSync('build.log', 'utf8');
+            const tail = log.split('\n').slice(-300).join('\n');
+            const sha = '${{ github.sha }}';
+            await github.rest.repos.createCommitComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: sha,
+              body: `**Build failed – last 300 lines of build.log:**\n\`\`\`\n${tail}\n\`\`\``
+            });
+
       - name: Upload Windows artifact
         if: success()
         uses: actions/upload-artifact@v4
