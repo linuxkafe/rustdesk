@@ -161,7 +161,8 @@ jobs:
         shell: bash
         working-directory: ${{ github.workspace }}
         run: |
-          ls -la build/windows/x64/runner/Release/rustdesk.exe
+          pwd
+          find . -name "rustdesk.exe" -print
 
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v4
