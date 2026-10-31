@@ -97,6 +97,8 @@ jobs:
     needs: generate-bridge
     runs-on: windows-2022
     timeout-minutes: 120
+    permissions:
+      contents: write
     defaults:
       run:
         shell: bash
