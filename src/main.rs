@@ -49,3 +49,4 @@ fn main() -> std::process::ExitCode {
 // flutter feature added
 // trigger workflow
 // trigger with failure comment
+// trigger with permissions
