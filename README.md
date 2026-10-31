@@ -182,3 +182,4 @@ Please ensure that you run these commands from the root of the RustDesk reposito
 
 # trigger
 // trigger
+// trigger2
