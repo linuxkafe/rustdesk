@@ -155,7 +155,7 @@ jobs:
         shell: bash
         working-directory: ${{ github.workspace }}
         run: |
-          python build.py --flutter
+          python build.py --flutter --skip-portable-pack
 
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v4
@@ -163,6 +163,5 @@ jobs:
           name: rustdesk-linuxkafe-windows
           path: |
             build/windows/x64/runner/Release/rustdesk.exe
-            build/windows/x64/runner/Release/data/flutter_assets/assets/linuxkafe.svg
           retention-days: 30
 
