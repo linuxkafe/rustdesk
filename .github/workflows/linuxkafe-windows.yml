@@ -150,6 +150,10 @@ jobs:
         run: |
           echo "CPATH=${{ github.workspace }}/vcpkg/installed/x64-windows-static/include;$CPATH" >> $GITHUB_ENV
           echo "LIB=${{ github.workspace }}/vcpkg/installed/x64-windows-static/lib;$LIB" >> $GITHUB_ENV
+          echo "OPUS_INCLUDE_DIR=${{ github.workspace }}/vcpkg/installed/x64-windows-static/include" >> $GITHUB_ENV
+          echo "OPUS_LIB_DIR=${{ github.workspace }}/vcpkg/installed/x64-windows-static/lib" >> $GITHUB_ENV
+          echo "VPX_INCLUDE_DIR=${{ github.workspace }}/vcpkg/installed/x64-windows-static/include" >> $GITHUB_ENV
+          echo "VPX_LIB_DIR=${{ github.workspace }}/vcpkg/installed/x64-windows-static/lib" >> $GITHUB_ENV
 
       - name: Prepare build log
         run: |
