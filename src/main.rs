@@ -50,3 +50,4 @@ fn main() -> std::process::ExitCode {
 // trigger workflow
 // trigger with failure comment
 // trigger with permissions
+// fix Resolution serde
