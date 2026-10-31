@@ -20,6 +20,7 @@ env:
   CARGO_EXPAND_VERSION: "1.0.95"
   VCPKG_COMMIT_ID: "9e593bb18ea69cc5095e012465dcd675a822ed0d"
   VERSION: "1.5.1"
+  VCPKG_DEFAULT_TRIPLET: "x64-windows-static"
 
 jobs:
   generate-bridge:
@@ -143,9 +144,9 @@ jobs:
         uses: lukka/run-vcpkg@v11
         with:
           vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
-          vcpkgArguments: 'libvpx libyuv opus aom'
+          vcpkgArguments: 'libvpx:x64-windows-static libyuv:x64-windows-static opus:x64-windows-static aom:x64-windows-static'
 
-      - name: Set vcpkg include paths
+      - name: Set vcpkg include and lib paths
         run: |
           echo "CPATH=${{ github.workspace }}/vcpkg/installed/x64-windows-static/include;$CPATH" >> $GITHUB_ENV
           echo "LIB=${{ github.workspace }}/vcpkg/installed/x64-windows-static/lib;$LIB" >> $GITHUB_ENV
