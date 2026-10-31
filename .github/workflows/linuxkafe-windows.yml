@@ -145,6 +145,12 @@ jobs:
         run: |
           vcpkg install --triplet x64-windows-static --x-install-root="$VCPKG_ROOT/installed"
 
+      - name: Patch pubspec for Flutter 3.22.3
+        shell: bash
+        working-directory: ${{ github.workspace }}
+        run: |
+          sed -i -e 's/extended_text: 14.0.0/extended_text: 13.0.0/g' flutter/pubspec.yaml
+
       - name: Build rustdesk
         shell: bash
         working-directory: ${{ github.workspace }}
