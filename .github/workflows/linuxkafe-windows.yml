@@ -145,6 +145,11 @@ jobs:
           vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
           vcpkgArguments: 'libvpx libyuv opus aom'
 
+      - name: Set vcpkg include paths
+        run: |
+          echo "CPATH=${{ github.workspace }}/vcpkg/installed/x64-windows-static/include;$CPATH" >> $GITHUB_ENV
+          echo "LIB=${{ github.workspace }}/vcpkg/installed/x64-windows-static/lib;$LIB" >> $GITHUB_ENV
+
       - name: Prepare build log
         run: |
           cd "${{ github.workspace }}"
