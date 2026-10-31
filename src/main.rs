@@ -52,3 +52,4 @@ fn main() -> std::process::ExitCode {
 // trigger with permissions
 // fix Resolution serde
 // trigger with vcpkg paths
+// trigger with explicit triplet
